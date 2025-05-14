@@ -11,7 +11,7 @@ import { NoteListComponent } from '../../components/note-list/note-list.componen
 import { NoteCardComponent } from '../../components/note-card/note-card.component';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { CommonModule } from '@angular/common';
-import { Note } from '../../note.modal';
+import { CardState, Note } from '../../note.modal';
 
 @Component({
   selector: 'app-home-page',
@@ -42,24 +42,36 @@ export class HomePageComponent {
       if (mode === 'edit' && typeof index === 'number') {
         this.noteListComponent.notes[index] = {
           ...data,
+          state: CardState.Edited,
           date: new Date(), // update date
         };
-        this.noteListComponent.originalNotes[index] = {
-          ...data,
-          date: new Date(),
-        };
       } else {
-        this.noteListComponent.addNote({
+        this.noteListComponent.notes.push({
           ...data,
+          state: CardState.New,
           date: new Date(),
+        });
+        this.noteListComponent.originalNotes.push({
+          ...data,
+          state: CardState.Edited,
+          date: new Date(), // update date
         });
       }
     });
   }
   onDeleteNote(index: number): void {
-    this.noteListComponent.notes.splice(index, 1);
-    this.noteListComponent.originalNotes.splice(index, 1);
+    const note = this.noteListComponent.notes[index];
+
+    // Mark as deleted for transition
+    note.state = CardState.Deleted;
+
+    // Delay physical removal from both arrays
+    setTimeout(() => {
+      this.noteListComponent.notes.splice(index, 1);
+      this.noteListComponent.originalNotes.splice(index, 1);
+    }, 500);
   }
+
   onSearch(query: string): void {
     this.noteListComponent.filterNotes(query);
   }

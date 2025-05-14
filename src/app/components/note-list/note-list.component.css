@@ -1,0 +1,16 @@
+.note-card-static {
+  background-color: white;
+}
+
+.note-card-new {
+  background-color: #d4edda; /* greenish */
+}
+
+.note-card-edited {
+  background-color: #fff3cd; /* yellowish */
+}
+.note-card-deleted {
+  background-color: #f8d7da; /* light red */
+  opacity: 0.5;
+  transition: opacity 2s ease-out;
+}

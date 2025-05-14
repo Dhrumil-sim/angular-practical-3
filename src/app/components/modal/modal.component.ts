@@ -39,7 +39,7 @@ export class ModalComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      this.submitForm.emit(this.form.value as { title: string; description: string });
+      this.submitForm.emit(this.form.value as Note);
       this.closeModal.emit();
     } else {
       this.form.markAllAsTouched();
