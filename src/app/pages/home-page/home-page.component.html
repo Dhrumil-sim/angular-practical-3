@@ -1,0 +1,54 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+  <div class="max-w-6xl mx-auto space-y-8">
+    <!-- Header -->
+
+    <header class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <h1
+        id="step1"
+        data-intro="Welcome to the new App"
+        class="text-4xl font-extrabold text-gray-900 tracking-tight"
+      >
+        My Notes
+      </h1>
+
+      <!-- Search Bar -->
+      <div class="w-full md:w-1/2 lg:w-1/3">
+        <app-search-bar id="step2" (searchQuery)="onSearch($event)"></app-search-bar>
+      </div>
+
+      <!-- Add Note Button -->
+      <button
+        id="step3"
+        (click)="loadModal('add')"
+        class="flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-2xl shadow-lg hover:bg-indigo-700 transition duration-200 ease-in-out"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        <span>Add Note</span>
+      </button>
+    </header>
+
+    <ng-template #modalReference></ng-template>
+    <ng-template #cardComponentReference></ng-template>
+
+    <!-- Note List -->
+    <main id="step4">
+      <app-note-list
+        (editNote)="loadModal('edit', $event.note, $event.index)"
+        (deleteNote)="onDeleteNote($event)"
+      ></app-note-list>
+    </main>
+  </div>
+</div>

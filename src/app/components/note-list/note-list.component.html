@@ -1,0 +1,94 @@
+<div *ngIf="notes.length > 0; else noNotes">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div
+      (click)="showNoteCard()"
+      class="relative bg-white p-5 rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 cursor-pointer min-h-[140px] flex flex-col justify-between group"
+      *ngFor="let note of notes; let i = index"
+      tabindex="0"
+      role="button"
+      aria-label="Note Card"
+    >
+      <h3 class="text-lg font-bold text-gray-900 truncate" title="{{ note.title }}">
+        {{ note.title }}
+      </h3>
+      <p class="text-sm text-gray-600 mt-2 line-clamp-3" title="{{ note.description }}">
+        {{ note.description }}
+      </p>
+
+      <!-- ✅ DATE SECTION -->
+      <p class="text-xs text-gray-400 mt-3">
+        {{ note.date | date: 'mediumDate' }} at {{ note.date | date: 'shortTime' }}
+      </p>
+
+      <!-- Edit and Delete Controls (hidden by default) -->
+      <div
+        class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2"
+        aria-label="Note Controls"
+      >
+        <button
+          id="step8"
+          (click)="loadModal(note, i)"
+          class="text-white bg-blue-500 hover:bg-blue-600 p-2 rounded-full shadow-md focus:outline-none"
+          aria-label="Edit Note"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 3l9 9-4 4H5l-4-4 9-9 4 4z"
+            />
+          </svg>
+        </button>
+        <button
+          class="text-white bg-red-500 hover:bg-red-600 p-2 rounded-full shadow-md focus:outline-none"
+          aria-label="Delete Note"
+          (click)="deleteNote.emit(i)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noNotes>
+  <div class="text-center py-20 text-gray-500">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="mx-auto h-16 w-16 mb-4 text-gray-300"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 8v4m0 4h.01M5 13l4 4L19 7"
+      />
+    </svg>
+    <p class="text-lg font-semibold">No notes yet</p>
+    <p class="text-sm">Click "Add Note" to get started</p>
+  </div>
+</ng-template>
+<ng-template #noteCard></ng-template>
